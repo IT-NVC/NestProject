@@ -15,5 +15,11 @@ export class CreateProductDto {
     
     @ApiProperty()
     quantitySold: number
+
+    @ApiProperty()
+    price: string
+
+    @ApiProperty()
+    idCategoryIdCategory:String
 }
 

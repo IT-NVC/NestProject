@@ -17,4 +17,7 @@ export class UpdateProductDto
     
     @ApiProperty()
     quantitySold: number
+
+    @ApiProperty()
+    price: string
 }

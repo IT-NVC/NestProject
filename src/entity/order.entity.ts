@@ -6,16 +6,19 @@ import { User } from "./user.entity";
 @Entity()
 export class Orders {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     @OneToMany(()=>SubOrder,(SubOrder)=>SubOrder.id_Order)
-    id_Order: number;
+    id_Order: String;
 
     @Column()
     @ManyToOne(()=>User, (User) =>User.id_User)
     id_User: String;
 
     @Column()
-    DateOrder: Date
+    amount: number
+
+    @Column()
+    totalMoney: String
     static id_User: any;
 
 }

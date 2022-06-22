@@ -14,6 +14,7 @@ export class ProductService {
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
+    createProductDto.idCategoryIdCategory = createProductDto.id_Category
     return await this.productsRepository.save(createProductDto)
   }
 

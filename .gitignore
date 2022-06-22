@@ -1,9 +1,9 @@
 # compiled output
 /dist
 /node_modules
-/src/account
-/src/order
-/src/user
+/src/account/
+/src/order/
+/src/user/
 
 # Logs
 logs

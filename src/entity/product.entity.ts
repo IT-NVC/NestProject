@@ -22,4 +22,7 @@ export class Product {
     @Column()
     quantitySold: number
 
+    @Column()
+    price: string
+
 }

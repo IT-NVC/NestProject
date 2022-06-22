@@ -8,15 +8,13 @@ export class SubOrder{
 
     @PrimaryColumn()
     @ManyToOne(()=>Orders,(Orders) => Orders.id_Order)
-    id_Order: number
+    id_Order: String;
 
     @PrimaryColumn()
     @ManyToOne(()=>Product,(Product) => Product.id_Product)
     id_Product: number
 
     @Column()
-    amount: number
+    DateOrder: String
 
-    @Column()
-    totalMoney: number
 }
