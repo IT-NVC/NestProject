@@ -6,19 +6,19 @@ import { Orders } from "./order.entity";
 export class User {
     @PrimaryColumn()
     @OneToMany(()=>Orders,(Orders)=>Orders.id_User)
-    id_User: String
+    id_User: string
 
     @Column('text')
-    Name: String
+    Name: string
 
     @Column('text')
-    Address: String
+    Address: string
 
     @Column('text')
-    Phone: String
+    Phone: string
 
-    @OneToOne(()=>Account, (Account) => Account.username)
-    @Column()
+    @ManyToOne(()=>Account, (Account) => Account.username)
+    @Column({unique: true})
     username: string
 
 }

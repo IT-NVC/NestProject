@@ -1,18 +1,20 @@
-import { Column, Entity, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "../Role/role.num";
 import { User } from "./user.entity";
 
 @Entity()
 export class Account{
-  
-    @OneToOne(()=>User, (User) => User.username)
+    @PrimaryGeneratedColumn()   
+    id_username: number
+
+    @OneToMany(()=>User, (User) => User.username)
     @PrimaryColumn() 
     username: string;
     
     @Column()
     password: string;
   
-    @Column({default: false})
-    isAdmin: boolean;
-    static username: any;
+    @Column({type:'enum', enum:Role,default: Role.User})
+    role: Role
 }
 

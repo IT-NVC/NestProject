@@ -8,18 +8,16 @@ export class Orders {
 
     @PrimaryColumn()
     @OneToMany(()=>SubOrder,(SubOrder)=>SubOrder.id_Order)
-    id_Order: String;
+    id_Order: string;
 
     @Column()
     @ManyToOne(()=>User, (User) =>User.id_User)
-    id_User: String;
+    id_User: string;
 
     @Column()
     amount: number
 
     @Column()
-    totalMoney: String
-    static id_User: any;
-
+    totalMoney: string
 }
 

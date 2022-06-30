@@ -11,18 +11,20 @@ export class Product {
 
     @Column()
     @ManyToOne(()=>Category,(Category)=>Category.id_Category)
-    id_Category: String
+    id_Category: string
 
     @Column('text')
-    NameProduct:String
+    NameProduct:string
 
     @Column()
     quantity: number
 
-    @Column()
+    @Column({default: 0})
     quantitySold: number
 
     @Column()
     price: string
 
+    @Column()
+    LinkImg: string
 }

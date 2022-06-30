@@ -8,13 +8,13 @@ export class SubOrder{
 
     @PrimaryColumn()
     @ManyToOne(()=>Orders,(Orders) => Orders.id_Order)
-    id_Order: String;
+    id_Order: string;
 
     @PrimaryColumn()
     @ManyToOne(()=>Product,(Product) => Product.id_Product)
     id_Product: number
 
     @Column()
-    DateOrder: String
+    DateOrder: string
 
 }

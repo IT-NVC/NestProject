@@ -1,9 +1,14 @@
 # compiled output
 /dist
 /node_modules
-/src/account/
-/src/order/
-/src/user/
+/src/account
+/src/Auth
+/src/hbs
+/src/Role
+/src/user
+/src/views
+
+app.controller.ts
 
 # Logs
 logs

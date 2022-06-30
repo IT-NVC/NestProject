@@ -5,10 +5,10 @@ export class CreateProductDto {
     id_Product: number
   
     @ApiProperty()
-    id_Category: String
+    id_Category: string
 
     @ApiProperty()
-    NameProduct:String
+    NameProduct:string
 
     @ApiProperty()
     quantity: number
@@ -20,6 +20,6 @@ export class CreateProductDto {
     price: string
 
     @ApiProperty()
-    idCategoryIdCategory:String
+    idCategoryIdCategory:string
 }
 

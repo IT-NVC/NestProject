@@ -7,10 +7,10 @@ export class UpdateProductDto
     id_Product: number
   
     @ApiProperty()
-    id_Category: String
+    id_Category: string
 
     @ApiProperty()
-    NameProduct:String
+    NameProduct:string
 
     @ApiProperty()
     quantity: number

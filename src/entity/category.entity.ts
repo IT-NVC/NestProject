@@ -7,7 +7,7 @@ export class Category {
 
     @PrimaryColumn()
     @OneToMany(()=>Product,(Product)=>Product.id_Category) 
-    id_Category: String;
+    id_Category: string;
     
     @Column()
     NameCategory: string;
