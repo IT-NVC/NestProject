@@ -12,12 +12,15 @@ export class Orders {
 
     @Column()
     @ManyToOne(()=>User, (User) =>User.id_User)
-    id_User: string;
+    id_User: number;
 
     @Column()
     amount: number
 
     @Column()
     totalMoney: string
+
+    @Column()
+    AddressShip: string
 }
 

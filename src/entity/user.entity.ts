@@ -1,12 +1,12 @@
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Account } from "./account.entity";
 import { Orders } from "./order.entity";
 
 @Entity()
 export class User {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     @OneToMany(()=>Orders,(Orders)=>Orders.id_User)
-    id_User: string
+    id_User: number
 
     @Column('text')
     Name: string
@@ -18,7 +18,7 @@ export class User {
     Phone: string
 
     @ManyToOne(()=>Account, (Account) => Account.username)
-    @Column({unique: true})
+    @Column({unique: true,default: null})
     username: string
 
 }

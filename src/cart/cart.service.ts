@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { rejects } from 'assert';
-import { find, UnsubscriptionError } from 'rxjs';
 import { Cart } from 'src/entity/cart.entity';
-import { Product } from 'src/entity/product.entity';
-import { json } from 'stream/consumers';
 import { Repository } from 'typeorm';
 import { CreateCartDto } from './dto/create-cart.dto';
-import { UpdateCartDto } from './dto/update-cart.dto';
+
 
 @Injectable()
 export class CartService {
@@ -19,7 +15,8 @@ export class CartService {
   async create(createCartDto: CreateCartDto):Promise<Cart> {
     
     let check  = await this.cartRepository.findOne({where : {id_User: createCartDto.id_User, id_Product:createCartDto.id_Product}})
-    if(check){
+    let check1  = await this.cartRepository.findOne({where : {addressIp: createCartDto.addressIp, id_Product:createCartDto.id_Product}})
+    if(check && check1){
         throw{
           "statusCode": 500,
           "message": "Internal server error"
@@ -27,19 +24,25 @@ export class CartService {
     }
     else
     {
-      createCartDto.idUserIdUser = createCartDto.id_User
+      var ip = require("ip");
+      if(createCartDto.id_User)
+      {
+        createCartDto.idUserIdUser = createCartDto.id_User
+        createCartDto.addressIp = null
+      }
+      else
+      {
+        createCartDto.id_User = null
+        createCartDto.addressIp = ip.address()
+      }
       createCartDto.idProductIdProduct = createCartDto.id_Product
       return await this.cartRepository.save(createCartDto)
     }
   }
 
-  async findAll():Promise<Cart[]> {
-      return await this.cartRepository.find()
-  }
-
-  async findOneUser(id: string):Promise<Cart[]> {
+  async findOneUser(id: number):Promise<Cart[]> {
     
-    let findUserCart = await this.cartRepository.query(`select id_User, product.id_Product, NameProduct, price
+    let findUserCart = await this.cartRepository.query(`select id_User, product.id_Product, NameProduct, price,LinkImg,id_Cart
     from cart, product
     where cart.id_Product = product.id_Product and cart.id_User = "`+id+`"`)
       
@@ -48,6 +51,16 @@ export class CartService {
 
   async remove(id: number) {
     return await this.cartRepository.delete({id_Cart: id}) 
+  }
+
+
+  async findIp(id: string):Promise<Cart[]> {
+    
+    let findUserCart = await this.cartRepository.query(`select addressIp, product.id_Product, NameProduct, price,LinkImg,quantity,id_Cart
+    from cart, product
+    where cart.id_Product = product.id_Product and cart.addressIp = "`+id+`"`)
+      
+    return findUserCart
   }
 }
 

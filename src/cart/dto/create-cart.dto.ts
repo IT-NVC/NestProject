@@ -7,13 +7,17 @@ export class CreateCartDto {
 
 
     @ApiProperty()
-    id_User:string
+    id_User:number
 
     @ApiProperty()
     id_Product: number
 
     @ApiProperty()
-    idUserIdUser: string
+    addressIp: string
+
+
+    @ApiProperty()
+    idUserIdUser: number
 
     @ApiProperty()
     idProductIdProduct: number

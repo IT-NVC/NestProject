@@ -2,11 +2,7 @@
 /dist
 /node_modules
 /src/account
-/src/Auth
-/src/hbs
-/src/Role
 /src/user
-/src/views
 
 app.controller.ts
 

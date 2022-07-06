@@ -1,0 +1,33 @@
+<div class="mt-4">
+    <h3>Thêm sản phẩm</h3>
+    <form method="POST" action="/nestproject/products/create">
+        <div class="form-group">
+            <label for="NameProduct">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="NameProduct" name="NameProduct">
+        </div>
+
+        <div class="form-group">
+            <label for="price">giá sản phẩm</label>
+            <input type="text" min="1000" step="1000" name="price" class="form-control" id="validationDefault03" required>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Số lượng</label>
+            <input type="text" class="form-control" id="level" name="quantity">
+        </div>
+
+        <div class="form-group">
+            <label for="LinkImg">Link Ảnh</label>
+            <input type="text" class="form-control" id="LinkImg" name="LinkImg">
+        </div>
+        <div class="form-group">
+                <label for="id_Category">Loại sản phẩm</label>
+                <select class="custom-select" id="validationDefault04" name = "id_Category" required>
+                    {{#each category}}
+                    <option value="{{this.id_Category}}">{{this.NameCategory}}</option>
+                    {{/each}}
+                </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+</div>

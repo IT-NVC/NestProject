@@ -7,7 +7,7 @@ export class CreateOrderDto {
     id_Order: String
 
     @ApiProperty()
-    id_User: String
+    id_User: number
 
     @ApiProperty()
     id_Product: number
@@ -20,5 +20,14 @@ export class CreateOrderDto {
 
     @ApiProperty()
     totalMoney: number
+
+    @ApiProperty()
+    Name: string
+
+    @ApiProperty()
+    Address: string
+
+    @ApiProperty()
+    Phone: string
 }
 

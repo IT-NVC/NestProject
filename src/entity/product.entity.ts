@@ -11,7 +11,7 @@ export class Product {
 
     @Column()
     @ManyToOne(()=>Category,(Category)=>Category.id_Category)
-    id_Category: string
+    id_Category: number
 
     @Column('text')
     NameProduct:string
@@ -27,4 +27,7 @@ export class Product {
 
     @Column()
     LinkImg: string
+
+    @Column()
+    createDate: string
 }

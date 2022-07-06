@@ -47,16 +47,17 @@ export class OrderService {
       do {
         let idOrder = id();
         createOrderDto.id_Order = idOrder;
-      } while (!await this.OrdersRepository.findOne({where : {id_Order : idOrder}}));
+      } while (await this.OrdersRepository.findOne({where : {id_Order : idOrder}}));
 
       //action create
-      return await this.OrdersRepository.query(`CALL orders(?,?,?,?,?,?)`,
+      return await this.OrdersRepository.query(`CALL orders(?,?,?,?,?,?,?)`,
       [ createOrderDto.id_Order,
         createOrderDto.id_User,
         createOrderDto.DateOrder,
         createOrderDto.id_Product,
         createOrderDto.amount,
-        createOrderDto.totalMoney
+        createOrderDto.totalMoney,
+        createOrderDto.Address
       ]
       )
     } catch (error) {
@@ -70,17 +71,15 @@ export class OrderService {
     } catch (error) {
       throw error
     }
-
   }
 
-  async findOneUser(id: string):Promise<Orders[]> {
+  async findOneUser(id: number):Promise<Orders[]> {
 
     return this.OrdersRepository.query(
       `select id_User, orders.id_Order, amount, totalMoney, product.id_Product, DateOrder, NameProduct
       from orders, product,sub_order
       where orders.id_Order = sub_order.idOrderIdOrder and sub_order.id_Product = product.id_Product and orders.id_User = "`+id+`"`
     )
-
   }
 
   // update(id: number, updateOrderDto: UpdateOrderDto) {

@@ -1,0 +1,63 @@
+<div>
+    <h3>Sản phẩm của tôi</h3>
+    <a href="/nestproject/products/createProduct">Thêm Sản phẩm</a>
+</div>
+
+
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"># </th>
+            <th scope="col">
+            Tên sản phẩm
+            </th>
+            <th scope="col">
+            giá
+            </th>
+            <th scope="col">
+            số lượng
+            </th>
+            <th scope="col">
+            số lượng đã bán
+            </th>
+            <th scope="col">
+            loại sản phẩm
+            </th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each product}}
+        <tr>
+            <td>    
+            </td>
+            <th scope="row">{{sum @index 1}}</th>
+            <td>{{this.NameProduct}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.quantitySold}}</td>
+            <td>{{this.NameCategory}}</td>
+            <td>
+                <a href="/nestproject/products/edit/{{this.id_Product}}" class="btn btn-link">Sửa</a>
+                <form action="/nestproject/products/delete/{{this.id_Product}}?_method=DELETE" method="post">
+                    <input type="submit" class="btn btn-link" value="Xóa">
+                </form>
+            </td>
+        </tr>
+        {{!-- khi không có dữ liệu để tải ra --}}
+        {{else}}
+        <tr>
+        <td colspan="5" class="text-center">
+            Bạn chưa đăng sản phẩm nào!
+            <a href="/nestproject/products/create" class="btn btn-link">Đăng sản phẩm</a>
+        </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</form>
+
+
+<form method="POST" name="delete-course-form">
+</form>

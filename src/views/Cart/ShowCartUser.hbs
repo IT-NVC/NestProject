@@ -1,0 +1,154 @@
+<div class="alert alert-primary Txh" role="alert">
+        Quản lí giỏ hàng
+</div><br>
+<div>
+    <h3 class="mt-2 col-12">Thông tin khách hàng</h3>
+    <div class="col-md-8 col-12 left">
+        <div class="customer-contact mb-3">
+            <form action="/nestproject/order/{{newProduct.id_Product}}" method="POST" class="">
+                <div class="form-row">
+                    <div class="col-6">
+                        <label for="validationDefault01">Họ tên
+                            <span>*</span>:
+                        </label>
+                        <input type="text" class="form-control" id="validationDefault01" name="Name" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="validationDefault01">Số điện thoại
+                            <span>*</span>:
+                        </label>
+                        <input type="tel" class="form-control" id="validationDefault01" name="Phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-12">
+                        <label for="validationDefault03">Địa chỉ giao hàng
+                            <span>*</span>:
+                        </label>
+                        <input type="text" class="form-control" id="validationDefault03" name = "Address" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12">
+                        <label for="totalMoney">Tổng tiền
+                            <span>*</span>:
+                        </label>
+                        <input type="text" class="form-control" id="totalMoney" name="totalMoney" required readonly>
+                    </div>
+                </div>
+                {{!-- <div class="mt-3">
+                    <button class="btn btn-danger btn-order" type="submit" style="width:100% ">
+                        Mua ngay
+                    </button>
+                </div> --}}
+            </form>
+        </div>
+    </div>
+    <div class="mt-4 d-flex align-items-center">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+        <label class="form-check-label" for="checkbox-all">
+          Chọn tất cả
+        </label>
+      </div>
+
+      <select class="form-control form-control-sm checkbox-select-all-options" name="action" required >
+        <option value="">-- Hành động --</option>
+        <option value="order">Mua</option>
+        <option value="delete">Xóa</option>
+      </select>
+      
+      <button class="btn btn-primary btn-sm check-all-submit-btn" disabled>Thực hiện</button>
+    </div>
+  </div>
+    <div class="table-sm">
+        <table class="table" id="list-car">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">
+                    Tên sản phẩm
+                    </th>
+                    <th scope="col">
+                    giá
+                    </th>
+                    <th scope="col">
+                    số lượng mua
+                    </th>
+                    <th scope="col">
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each cart}}
+            <tr>
+                <td>
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="productIds[]" value="{{this.id_Product}}">
+                    </div>
+                </td>
+                <td><div style="width: auto;height: auto;"><img style="width: 80px" src="{{this.LinkImg}}" alt="Anh"></div></td>
+                <td>{{this.NameProduct}}</td>
+                <td id="totalMoney{{this.id_Product}}">{{this.price}}</td>
+                <td>
+                    <input style="width: 80px" type="number" value="1" class="form-control" onchange="myFunction({{this.id_Product}})" id="quantity{{this.id_Product}}" name="amount" min="1" max="{{this.quantity}}" required>
+                </td>
+                <td>
+                    <a href="/nestproject/order/{{this.id_Product}}" class="btn btn-link">Mua hàng</a>
+                    <form action="/nestproject/cart/{{this.id_Cart}}?_method=DELETE" method="post">
+                        <input type="submit" class="btn btn-link" value="Xóa">
+                    </form>
+                </td>
+            </tr>
+            <input type="text" id="priceProduct{{this.id_Product}}" style="display: none;" value="{{this.price}}">
+            {{/each}}
+            </tbody>
+        </table>
+
+</div>
+
+<script>
+    //plusMoney
+    function myFunction(id){
+        let quantity =document.getElementById('quantity'+id).value;
+        let price = document.getElementById('priceProduct'+id).value;
+        let totalMoney = document.getElementById('totalMoney'+id);
+        totalMoney.textContent = quantity*price;
+    }
+
+
+    //
+    let checkboxAll = $('#checkbox-all');
+    let courseItemCheckbox = $('input[name="productIds[]"]');
+    let checkAllSubmitBtn = $('.check-all-submit-btn');
+
+     //Checkbox all clicked
+        checkboxAll.change(function (){
+          let isCheckedAll = $(this).prop('checked');
+          courseItemCheckbox.prop('checked',isCheckedAll);
+          renderCheckAllSubmitBtn();
+        });
+
+        //Course item checkbox changed
+        courseItemCheckbox.change(function(){
+          let isCheckedAll = courseItemCheckbox.length ===  $('input[name="productIds[]"]:checked').length;
+          checkboxAll.prop('checked',isCheckedAll);
+          renderCheckAllSubmitBtn();
+        });
+
+
+        //Re-render check all submit button
+        function renderCheckAllSubmitBtn(){
+          let checkedCount = $('input[name = "productIds[]"]:checked').length;
+            if(checkedCount){
+              checkAllSubmitBtn.attr('disabled',false);
+            }
+            else
+            {
+              checkAllSubmitBtn.attr('disabled',true);
+            }
+        }
+</script>

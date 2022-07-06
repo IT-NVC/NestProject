@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class createcategory {
     @ApiProperty()
-    id_Category: string
+    id_Category: number
 
     @ApiProperty()
     NameCategory:string

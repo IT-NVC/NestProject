@@ -5,9 +5,9 @@ import { User } from "./user.entity";
 @Entity()
 export class Category {
 
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     @OneToMany(()=>Product,(Product)=>Product.id_Category) 
-    id_Category: string;
+    id_Category: number;
     
     @Column()
     NameCategory: string;

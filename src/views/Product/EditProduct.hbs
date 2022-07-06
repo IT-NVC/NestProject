@@ -1,0 +1,36 @@
+<div class="mt-4">
+    <h3>Sửa sản phẩm</h3>
+    {{#if newProduct}}
+    <form method="POST" action="/nestproject/products/edit/{{newProduct.id_Product}}?_method=PATCH">
+        <div class="form-group">
+            <label for="NameProduct">Tên sản phẩm</label>
+            <input type="text" class="form-control" value="{{newProduct.NameProduct}}" id="NameProduct" name="NameProduct">
+        </div>
+
+        <div class="form-group">
+            <label for="price">giá sản phẩm</label>
+            <input type="text" min="1000" step="1000" name="price" class="form-control" id="validationDefault03" value="{{newProduct.price}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Số lượng</label>
+            <input type="text" class="form-control" value="{{newProduct.quantity}}" id="level" name="quantity">
+        </div>
+
+        <div class="form-group">
+            <label for="LinkImg">Link Ảnh</label>
+            <input type="text" class="form-control" value="{{newProduct.LinkImg}}" id="LinkImg" name="LinkImg">
+        </div>
+        <div class="form-group">
+                <label for="id_Category">Loại sản phẩm</label>
+                <select class="custom-select" id="validationDefault04" name = "id_Category" required>
+                    <option selected disabled>{{newProduct.NameCategory}}</option>
+                    {{#each category}}
+                    <option value="{{this.id_Category}}">{{this.NameCategory}}</option>
+                    {{/each}}
+                </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+    {{/if}}
+</div>

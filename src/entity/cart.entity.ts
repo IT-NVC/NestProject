@@ -7,13 +7,16 @@ export class Cart {
     @PrimaryGeneratedColumn()
     id_Cart: number
 
-    @Column()
+    @Column({default: null})
     @ManyToOne(()=>User,(User)=>User.id_User)
     @JoinColumn()
-    id_User:string
+    id_User:number
 
 
     @ManyToOne(()=>Product,(Product)=>Product.id_Product)
     @Column()
     id_Product: number
+
+    @Column()
+    addressIp: string
 }

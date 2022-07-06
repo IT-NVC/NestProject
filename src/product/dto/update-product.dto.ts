@@ -7,17 +7,23 @@ export class UpdateProductDto
     id_Product: number
   
     @ApiProperty()
-    id_Category: string
+    id_Category: number
 
     @ApiProperty()
     NameProduct:string
 
     @ApiProperty()
     quantity: number
-    
-    @ApiProperty()
-    quantitySold: number
 
     @ApiProperty()
     price: string
+
+    @ApiProperty()
+    idCategoryIdCategory:number
+
+    @ApiProperty()
+    LinkImg: string
+
+    @ApiProperty()
+    createDate: string
 }

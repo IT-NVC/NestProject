@@ -11,8 +11,15 @@ async function bootstrap() {
     AppModule,
   );
 
-  app.useStaticAssets(join(__dirname, '..', 'public'));
+  //static file public
+  app.useStaticAssets(join(__dirname, '..', 'public'), {prefix: '/public'});
   app.setBaseViewsDir(join(__dirname, '..', 'src/views'));
+
+  //override method
+  const methodOverride = require('method-override');
+  app.use(methodOverride('_method'));
+
+  //layouts
   app.engine(
     'hbs',
     hbs.engine({
@@ -21,7 +28,8 @@ async function bootstrap() {
       layoutsDir: join(__dirname, '..', 'src/views', 'layouts'),
       partialsDir: join(__dirname, '..', 'src/views', 'partials'),
       helpers: { printName,
-      eq:equal
+      eq:equal,
+      sum: (a, b) => a + b
       },
     }),
   );

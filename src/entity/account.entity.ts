@@ -8,7 +8,7 @@ export class Account{
     id_username: number
 
     @OneToMany(()=>User, (User) => User.username)
-    @PrimaryColumn() 
+    @Column({unique: true})
     username: string;
     
     @Column()

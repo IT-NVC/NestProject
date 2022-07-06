@@ -14,11 +14,12 @@ import { AuthService } from './Auth/auth.service';
 import { AppController } from './app.controller';
 import { AuthModule } from './Auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './Role/role.guard';
 import { JwtAuthGuard } from './Auth/jwt-auth.guard';
 import { CategoryModule } from './category/category.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './entity/cart.entity';
+import { join } from 'path';
 
 
 @Module({
@@ -49,6 +50,6 @@ import { Cart } from './entity/cart.entity';
     CategoryModule,
     CartModule],
     controllers: [AppController],
-    providers: [   ]
+    providers: []
 })
 export class AppModule {}
