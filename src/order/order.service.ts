@@ -47,7 +47,7 @@ export class OrderService {
       do {
         let idOrder = id();
         createOrderDto.id_Order = idOrder;
-      } while (await this.OrdersRepository.findOne({where : {id_Order : idOrder}}));
+      } while (!await this.OrdersRepository.findOne({where : {id_Order : idOrder}}));
 
       //action create
       return await this.OrdersRepository.query(`CALL orders(?,?,?,?,?,?,?)`,

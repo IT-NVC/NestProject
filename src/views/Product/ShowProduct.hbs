@@ -6,34 +6,99 @@
 </script>
 <div class="tourdulich">
     <div class="row">
-            {{#each product}}
-            <form id="formCart{{this.id_Product}}"  style="display: none;" action="/nestproject/cart" method="post">
-                <input type="text" name="id_Product" value="{{this.id_Product}}" style="display: none;">
-                <input type="text" name="id_User" value="{{this.id_User}}" style="display: none;">
-            </form> 
-            <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="card" style="border-radius: 10px;">
-                    <img src="{{this.LinkImg}}" style="border-top-left-radius: 10px;border-top-right-radius: 10px;" class="card-img-top" alt="Anh">
-                    <div class="card-body">
-                        {{!-- <p class="Text-tour">2021-11-18 - Trong ngày</p> --}}
-                        <a href="/nestproject/products/seeProduct/{{this.id_Product}}"><h5 class="card-title fz-25">{{this.NameProduct}}</h5></a>
-                        <p class="color-blue fz-20">Số lượng còn: {{this.quantity}}</p>
-                        <p class="Ma-tour color-blue fz-20" id = "matourgd">Đã bán:{{this.quantitySold}}</p>
-                        <div class="price-tour-family">
-                            <p class="color-red fz-25">{{this.price}} ₫</p>
-                            <p class="color-blue fz-20"></p>
+        {{#if productTrend}}
+                <div class="" style="width: 100%;">
+                    <h3><b>Bán chạy nhất</b></h3>
+                </div>
+            {{#each productTrend}}
+                <form id="formCart{{this.id_Product}}"  style="display: none;" action="/nestproject/cart" method="post">
+                    <input type="text" name="id_Product" value="{{this.id_Product}}" style="display: none;">
+                    <input type="text" name="id_User" value="{{this.id_User}}" style="display: none;">
+                </form> 
+                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card" style="border-radius: 10px;">
+                        <img src="{{this.LinkImg}}" style="border-top-left-radius: 10px;border-top-right-radius: 10px;" class="card-img-top" alt="Anh">
+                        <div class="card-body">
+                            {{!-- <p class="Text-tour">2021-11-18 - Trong ngày</p> --}}
+                            <a href="/nestproject/products/seeProduct/{{this.id_Product}}"><h5 class="card-title fz-25">{{this.NameProduct}}</h5></a>
+                            <p class="color-blue fz-20">Số lượng còn: {{this.quantity}}</p>
+                            <p class="Ma-tour color-blue fz-20" id = "matourgd">Đã bán:{{this.quantitySold}}</p>
+                            <div class="price-tour-family">
+                                <p class="color-red fz-25">{{this.price}} ₫</p>
+                                <p class="color-blue fz-20"></p>
+                            </div>
+                            <div class="btn-tour-family">
+                                <button id="btnCart" onclick="submitCart({{this.id_Product}})" class="btn-describe-family fz-20"><i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                                <a href="/nestproject/products/seeProduct/{{this.id_Product}}" class="btn-buy-family fz-20">Mua hàng</a>
+                            </div>
                         </div>
-                        <div class="btn-tour-family">
-                            <button id="btnCart" onclick="submitCart({{this.id_Product}})" class="btn-describe-family fz-20"><i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
-                            <a href="/nestproject/products/seeProduct/{{this.id_Product}}" class="btn-buy-family fz-20">Mua hàng</a>
+                    </div>
+            </div>
+            {{/each}}
+        {{/if}}
+        {{#if product}}
+                <div class="" style="width: 100%;">
+                    <h3><b>Tất cả sản phẩm</b></h3>
+                </div>
+            {{#each product}}
+                <form id="formCart{{this.id_Product}}"  style="display: none;" action="/nestproject/cart" method="post">
+                    <input type="text" name="id_Product" value="{{this.id_Product}}" style="display: none;">
+                    <input type="text" name="id_User" value="{{this.id_User}}" style="display: none;">
+                </form> 
+                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card" style="border-radius: 10px;">
+                        <img src="{{this.LinkImg}}" style="border-top-left-radius: 10px;border-top-right-radius: 10px;" class="card-img-top" alt="Anh">
+                        <div class="card-body">
+                            {{!-- <p class="Text-tour">2021-11-18 - Trong ngày</p> --}}
+                            <a href="/nestproject/products/seeProduct/{{this.id_Product}}"><h5 class="card-title fz-25">{{this.NameProduct}}</h5></a>
+                            <p class="color-blue fz-20">Số lượng còn: {{this.quantity}}</p>
+                            <p class="Ma-tour color-blue fz-20" id = "matourgd">Đã bán:{{this.quantitySold}}</p>
+                            <div class="price-tour-family">
+                                <p class="color-red fz-25">{{this.price}} ₫</p>
+                                <p class="color-blue fz-20"></p>
+                            </div>
+                            <div class="btn-tour-family">
+                                <button id="btnCart" onclick="submitCart({{this.id_Product}})" class="btn-describe-family fz-20"><i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                                <a href="/nestproject/products/seeProduct/{{this.id_Product}}" class="btn-buy-family fz-20">Mua hàng</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            {{/each}}
+        {{/if}}
+        
+        {{#if productOneCategory}}
+            {{#if NameCategory}}
+                <div class="" style="width: 100%;">
+                    <h3><p>{{this.NameCategory}}</p></h3>
+                </div>
+            {{/if}}
+            {{#each productOneCategory}}
+                <form id="formCart{{this.id_Product}}"  style="display: none;" action="/nestproject/cart" method="post">
+                    <input type="text" name="id_Product" value="{{this.id_Product}}" style="display: none;">
+                    <input type="text" name="id_User" value="{{this.id_User}}" style="display: none;">
+                </form> 
+                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="card" style="border-radius: 10px;">
+                        <img src="{{this.LinkImg}}" style="border-top-left-radius: 10px;border-top-right-radius: 10px;" class="card-img-top" alt="Anh">
+                        <div class="card-body">
+                            {{!-- <p class="Text-tour">2021-11-18 - Trong ngày</p> --}}
+                            <a href="/nestproject/products/seeProduct/{{this.id_Product}}"><h5 class="card-title fz-25">{{this.NameProduct}}</h5></a>
+                            <p class="color-blue fz-20">Số lượng còn: {{this.quantity}}</p>
+                            <p class="Ma-tour color-blue fz-20" id = "matourgd">Đã bán:{{this.quantitySold}}</p>
+                            <div class="price-tour-family">
+                                <p class="color-red fz-25">{{this.price}} ₫</p>
+                                <p class="color-blue fz-20"></p>
+                            </div>
+                            <div class="btn-tour-family">
+                                <button id="btnCart" onclick="submitCart({{this.id_Product}})" class="btn-describe-family fz-20"><i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                                <a href="/nestproject/products/seeProduct/{{this.id_Product}}" class="btn-buy-family fz-20">Mua hàng</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-          </div>
-            {{else}}
-                <h1>unkown</h1>
-        {{/each}}
-    </div>
+             {{/each}}
+        {{/if}}
     </div>
 </div>
 

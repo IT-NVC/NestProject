@@ -5,11 +5,15 @@ import { AppModule } from './app.module';
 import * as hbs from 'express-handlebars';
 import { printName } from './hbs/helper';
 import { equal } from 'assert';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
   );
+
+  //cookie
+  app.use(cookieParser());
 
   //static file public
   app.useStaticAssets(join(__dirname, '..', 'public'), {prefix: '/public'});

@@ -115,4 +115,25 @@ export class ProductService {
       return product
     }
   }
+
+
+  //product electric
+  async findOneCategory(id :number){
+    let productOneCategory = await this.productsRepository.query(
+      `select *
+      from product,category
+      where category.id_Category = product.id_Category and category.id_Category =`+id+``);
+    return productOneCategory
+  }
+
+  //product trend
+  async productTrend(){
+    //get three product best selling
+    let productTrend = await this.productsRepository.query(
+      `SELECT *
+      FROM product
+      ORDER BY quantitySold DESC
+      LIMIT 0, 3;`);
+    return productTrend
+  }
 }

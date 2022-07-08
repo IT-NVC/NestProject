@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Redirect, UseGuards, Res, Render, Query } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Redirect, UseGuards, Res, Render, Query, Req } from '@nestjs/common';
+import { Response,Request } from 'express';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -7,6 +7,10 @@ import { CategoryService } from 'src/category/category.service';
 import { Product } from 'src/entity/product.entity';
 import { get } from 'http';
 import { SearchProductDto } from './dto/search-product.dto';
+import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
+import { RolesGuard } from 'src/Role/roles.guard';
+import { Role } from 'src/Role/role.num';
+import { Roles } from 'src/Role/roles.decorator';
 
 
 @Controller('nestProject/products')
@@ -15,12 +19,18 @@ export class ProductController {
     private readonly productService: ProductService,
     private readonly categoryService: CategoryService) {}
 
-  //findOfUser
   @Post('/find')
   async findOfUser(@Res() res: Response,@Body() search: SearchProductDto){
     let product= await this.productService.findOfUser(search.NameProduct);
     product =JSON.parse(JSON.stringify(product))
     res.render('Product/ShowProduct',{product})
+  }
+
+  @Get('/oneCategory/:id')
+  async findOneCategory(@Res() res: Response,@Param('id') id: number){
+    let productOneCategory= await this.productService.findOneCategory(id);
+    productOneCategory =JSON.parse(JSON.stringify(productOneCategory))
+    res.render('Product/ShowProduct',{productOneCategory, NameCategory: productOneCategory[0].NameCategory})
   }
 
   @Get('/seeProduct/:id')
@@ -31,14 +41,11 @@ export class ProductController {
     res.render('Product/BuyProduct',{newProduct})
   }
 
-
-  //findOfAdmin
-  // @UseGuards(JwtAuthGuard,RolesGuard)
-  // @Roles(Role.Admin,Role.User)
   @Get()
   async findAll(@Res() res: Response){
     let product = await this.productService.findAll();
-    res.render('Product/ShowProduct',{product})
+    let productTrend = await this.productService.productTrend();
+    res.render('Product/ShowProduct',{product,productTrend})
   }
 
   @Get(':id')
@@ -70,8 +77,11 @@ export class ProductController {
   }
 
   //me
+  //findOfAdmin
+  // @UseGuards(JwtAuthGuard,RolesGuard)
+  // @Roles(Role.Admin)
   @Get('/stored/show')
-  async managerProduct(@Res() res: Response){
+  async managerProduct(@Res() res: Response,@Req() req: Request){
     let product = await this.productService.findAll();
     res.render('Product/me/stored/StoredProduct',{product})
   }
