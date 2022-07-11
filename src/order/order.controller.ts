@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Render } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Response } from 'express';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -16,6 +16,7 @@ export class OrderController {
               private readonly userService:UserService
     ) {}
 
+  //create order
   @Post(':id')
   async create(@Res() res: Response,@Body() createOrderDto: CreateOrderDto,@Param('id') id:number) {
 
@@ -26,7 +27,7 @@ export class OrderController {
     if(product.quantity<createOrderDto.amount)
     {
       throw{
-        "statusCode": 500,
+        "statusCode": 400,
         "message": "Internal server error"
       }
     }
@@ -50,7 +51,7 @@ export class OrderController {
       else
       {
 
-        //create new user
+        //create new client
         await this.userService.create(user)
         let findUser = await this.userService.findOneOrder({
           Name: createOrderDto.Name,
@@ -61,6 +62,7 @@ export class OrderController {
       }
 
 
+      //fix array
       product = JSON.parse(JSON.stringify(product))
       let productConvert = product[0]
       delete productConvert.idCategoryIdCategory
@@ -85,12 +87,11 @@ export class OrderController {
 
       res.send('<script>alert("Đặt hàng thành công!!")</script>')
     }
-
   }
 
   @Get()
-  findAll() {
-    return this.orderService.findAll(); 
+  async findAll() {
+    return await this.orderService.findAll(); 
   }
 
   @Get(':id')
@@ -98,10 +99,15 @@ export class OrderController {
     return this.orderService.findOneUser(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-  //   return this.orderService.update(+id, updateOrderDto);
-  // }
+  @Patch('/payment/:idOrder')
+  async updatePayment(@Param('idOrder') idOrder: string, @Body() updateOrderDto: UpdateOrderDto) {
+    return await this.orderService.updatePayment(idOrder, updateOrderDto);
+  }
+
+  @Patch(':idOrder')
+  async update(@Param('idOrder') idOrder: string, @Body() updateOrderDto: UpdateOrderDto) {
+    return await this.orderService.update(idOrder, updateOrderDto);
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

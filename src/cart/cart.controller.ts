@@ -11,8 +11,15 @@ export class CartController {
 
   @Post()
   async create(@Body() createCartDto: CreateCartDto,@Res() res:Response) {
-    await this.cartService.create(createCartDto);
-    res.send('<script>alert("Da them vao gio hang!")</script>')
+    let newCart = await this.cartService.create(createCartDto);
+    if(newCart)
+    {
+      res.send('<script>alert("Da them vao gio hang!")</script>')
+    }
+    else
+    {
+      res.send('<script>alert("San pham da co trong gio hang!")</script>')
+    }
   }
 
   @Get()

@@ -17,4 +17,12 @@ export class SubOrder{
     @Column()
     DateOrder: string
 
+    @Column()
+    amount: number
+
+    @Column()
+    totalMoney: string
+
+    @Column({default: false})
+    statusPayment: boolean
 }

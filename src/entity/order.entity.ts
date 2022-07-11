@@ -15,12 +15,9 @@ export class Orders {
     id_User: number;
 
     @Column()
-    amount: number
-
-    @Column()
-    totalMoney: string
-
-    @Column()
     AddressShip: string
+
+    @Column({default: false})
+    statusOrder: boolean
 }
 

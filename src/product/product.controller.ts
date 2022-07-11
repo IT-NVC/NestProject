@@ -53,15 +53,17 @@ export class ProductController {
     return this.productService.findOne(+id);
   }
 
-
   //action
+  // @UseGuards(JwtAuthGuard,RolesGuard)
+  // @Roles(Role.Admin)
   @Post('/create')
   async create(@Res() res: Response,@Body() createProductDto: CreateProductDto) {
     await this.productService.create(createProductDto);
     res.redirect('/nestProject/products/stored/show')
   }
 
-
+  // @UseGuards(JwtAuthGuard,RolesGuard)
+  // @Roles(Role.Admin)
   @Patch('/edit/:id')
   async update(@Res() res: Response,@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     await this.productService.update(+id, updateProductDto);
@@ -69,6 +71,8 @@ export class ProductController {
     
   }
 
+  // @UseGuards(JwtAuthGuard,RolesGuard)
+  // @Roles(Role.Admin)
   @Delete('/delete/:id')
   async remove(@Res() res: Response,@Param('id') id: string) {
     await this.productService.remove(+id);
@@ -86,12 +90,16 @@ export class ProductController {
     res.render('Product/me/stored/StoredProduct',{product})
   }
 
+  // @UseGuards(JwtAuthGuard,RolesGuard)
+  // @Roles(Role.Admin)
   @Get('me/createProduct')
   async uiCreateProduct(@Res() res: Response) {
     let category = await this.categoryService.findAll();
     res.render('Product/CreateProduct',{category})
   }
 
+  // @UseGuards(JwtAuthGuard,RolesGuard)
+  // @Roles(Role.Admin)
   @Get('/edit/:id')
   async uiEditProduct(@Res() res: Response,@Param('id') id: string){
       let product = await this.productService.findOne(+id);

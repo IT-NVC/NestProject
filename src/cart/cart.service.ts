@@ -16,11 +16,8 @@ export class CartService {
     
     let check  = await this.cartRepository.findOne({where : {id_User: createCartDto.id_User, id_Product:createCartDto.id_Product}})
     let check1  = await this.cartRepository.findOne({where : {addressIp: createCartDto.addressIp, id_Product:createCartDto.id_Product}})
-    if(check && check1){
-        throw{
-          "statusCode": 500,
-          "message": "Internal server error"
-        }
+    if(check || check1){
+      return
     }
     else
     {

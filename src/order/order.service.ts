@@ -42,6 +42,8 @@ export class OrderService {
     try {
       let idOrder;
       createOrderDto.DateOrder = dateNow();
+      createOrderDto.statusOrder = false;
+      createOrderDto.statusPayment = false;
       
       //check id_Order
       do {
@@ -50,14 +52,16 @@ export class OrderService {
       } while (!await this.OrdersRepository.findOne({where : {id_Order : idOrder}}));
 
       //action create
-      return await this.OrdersRepository.query(`CALL orders(?,?,?,?,?,?,?)`,
+      return await this.OrdersRepository.query(`CALL orders(?,?,?,?,?,?,?,?,?)`,
       [ createOrderDto.id_Order,
         createOrderDto.id_User,
         createOrderDto.DateOrder,
         createOrderDto.id_Product,
         createOrderDto.amount,
         createOrderDto.totalMoney,
-        createOrderDto.Address
+        createOrderDto.Address,
+        createOrderDto.statusOrder,
+        createOrderDto.statusPayment
       ]
       )
     } catch (error) {
@@ -67,7 +71,11 @@ export class OrderService {
 
   async findAll():Promise<Orders[]> {
     try {
-      return await this.OrdersRepository.find();
+      return await this.OrdersRepository.query(
+        `select id_User, orders.id_Order, amount, totalMoney, product.id_Product, DateOrder, NameProduct,statusOrder,statusPayment
+        from orders, product,sub_order
+        where orders.id_Order = sub_order.idOrderIdOrder and sub_order.id_Product = product.id_Product`
+      );
     } catch (error) {
       throw error
     }
@@ -82,9 +90,32 @@ export class OrderService {
     )
   }
 
-  // update(id: number, updateOrderDto: UpdateOrderDto) {
-  //   return `This action updates a #${id} order`;
-  // }
+  async update(id: string, updateOrderDto: UpdateOrderDto) {
+    let updateOrder = {
+      id_Order: id,
+      statusOrder: updateOrderDto.statusOrder
+    }
+    await this.OrdersRepository.query(
+      'UPDATE `nestproject`.`orders` SET `statusOrder` = '+updateOrder.statusOrder+' WHERE (`id_Order` = "'+updateOrder.id_Order+'");'
+    );
+
+    return "Xac nhan don hang thanh cong!";
+  }
+
+
+  async updatePayment(idOrder: string, updateOrderDto:UpdateOrderDto){
+
+    let updateOrder = {
+      id_Order: idOrder,
+      statusPayment: updateOrderDto.statusPayment
+    }
+    await this.OrdersRepository.query(
+      'UPDATE `nestproject`.`sub_order` SET `statusPayment` = '+updateOrder.statusPayment+' WHERE (`id_Order` = "'+updateOrder.id_Order+'");'
+    );
+
+    return "Da thanh toan!";
+    
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} order`;

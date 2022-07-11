@@ -29,5 +29,11 @@ export class CreateOrderDto {
 
     @ApiProperty()
     Phone: string
+
+    @ApiProperty({default: false})
+    statusOrder: boolean
+
+    @ApiProperty({default: false})
+    statusPayment: boolean
 }
 
